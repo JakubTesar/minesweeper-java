@@ -2,12 +2,17 @@ package cz.educanet.minesweeper.logic;
 
 public class Minesweeper {
 
+    private final Field playground;
     private int rowsCount;
     private int columnsCount;
+    private int flag = 0;
+
 
     public Minesweeper(int rows, int columns) {
         this.rowsCount = rows;
         this.columnsCount = columns;
+        
+        this.playground = Field.generetField(rows, columns);
     }
 
     /**
@@ -21,40 +26,21 @@ public class Minesweeper {
      * @return field type
      */
     public int getField(int x, int y) {
-        return 0;
+        return playground.getCellType(x,y);
     }
 
-    /**
-     * Toggles the field state, ie.
-     * 0 -> 1,
-     * 1 -> 2,
-     * 2 -> 3 and
-     * 3 -> 0
-     *
-     * @param x X
-     * @param y Y
-     */
-    public void toggleFieldState(int x, int y) {
+
+    public void toggleFieldState(int x, int y) { // Pravý / Vlaječka
+        playground.setCellType(x,y,2);
+        setFlag(+1);
     }
 
-    /**
-     * Reveals the field and all fields adjacent (with 0 adjacent bombs) and all fields adjacent to the adjacent fields... ect.
-     *
-     * @param x X
-     * @param y Y
-     */
-    public void reveal(int x, int y) {
+    public void reveal(int x, int y) { // Levý / Odhalení
+        playground.setCellType(x,y,1);
     }
 
-    /**
-     * Returns the amount of adjacent bombs
-     *
-     * @param x X
-     * @param y Y
-     * @return number of adjacent bombs
-     */
-    public int getAdjacentBombCount(int x, int y) {
-        return 0;
+    public int getAdjacentBombCount(int x, int y) { // Čísla okolo bomb
+        return 1;
     }
 
     /**
@@ -112,4 +98,11 @@ public class Minesweeper {
         return columnsCount;
     }
 
+    public int getFlag() {
+        return flag;
+    }
+
+    public void setFlag(int flag) {
+        this.flag = flag;
+    }
 }
