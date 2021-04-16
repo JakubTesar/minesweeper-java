@@ -12,7 +12,7 @@ public class Minesweeper {
     public Minesweeper(int rows, int columns) {
         this.rowsCount = rows;
         this.columnsCount = columns;
-        
+
         this.playground = Field.generetField(rows, columns);
     }
 
@@ -27,26 +27,51 @@ public class Minesweeper {
      * @return field type
      */
     public int getField(int x, int y) {
-        return playground.getCellType(x,y);
+        return playground.getCellType(x, y);
     }
+
     public void toggleFieldState(int x, int y) { // Pravý / Vlaječka
-        playground.setCellType(x,y,2);
-        
+        playground.setCellType(x, y, 2);
+
         setFlag(+1);
     }
+
     public void reveal(int x, int y) { // Levý / Odhalení
-        playground.setCellType(x,y,1);
-        if (playground.isClicked(x,y)){
+        playground.setCellType(x, y, 1);
+        if (playground.isClicked(x, y)) {
             isClicked2 = true;
         }
     }
 
     public int getAdjacentBombCount(int x, int y) { // Čísla okolo bomb
-        if(){
-            
+        int bombs = 0;
+
+        if (playground.getCellPosition(x + 1, y + 1).isBomb()) { // Pravý horní
+            bombs++;
+        }
+        if (playground.getCellPosition(x + 1, y).isBomb()) { // Pravý střed
+            bombs++;
+        }
+        if (playground.getCellPosition(x + 1, y -1).isBomb()) { // Pravý dolní
+            bombs++;
+        }
+        if (playground.getCellPosition(x, y +1).isBomb()) { // Horní střed
+            bombs++;
+        }
+        if (playground.getCellPosition(x, y-1).isBomb()) { // Dolní střed
+            bombs++;
+        }
+        if (playground.getCellPosition(x - 1, y+1).isBomb()) { // Levý horní
+            bombs++;
+        }
+        if (playground.getCellPosition(x - 1, y).isBomb()) { // Levý střed
+            bombs++;
+        }
+        if (playground.getCellPosition(x - 1, y-1).isBomb()) { // Levý Dolní
+            bombs++;
         }
 
-        return 0;
+        return bombs;
     }
 
     /**
@@ -90,12 +115,15 @@ public class Minesweeper {
     public int getRows() {
         return rowsCount;
     }
+
     public int getColumns() {
         return columnsCount;
     }
+
     public int getFlag() {
         return flag;
     }
+
     public void setFlag(int flag) {
         this.flag = flag;
     }

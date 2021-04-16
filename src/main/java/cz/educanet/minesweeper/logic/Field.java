@@ -25,6 +25,10 @@ public class Field {
         }
         return myField.generateBombs(myField);
     }
+
+    public Cell getCellPosition(int x, int y){
+        return this.playground[x][y];
+    }
     /**
      * Returns the amount of bombs on the field
      *
@@ -33,6 +37,7 @@ public class Field {
     public int getBombCount() {
         return 30;
     }
+
     public Field generateBombs(Field myField) {
 
         Random rand = new Random();
