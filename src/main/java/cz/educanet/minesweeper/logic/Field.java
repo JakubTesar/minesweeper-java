@@ -1,11 +1,14 @@
 package cz.educanet.minesweeper.logic;
 
+import java.util.ArrayList;
+import java.util.Random;
+
 public class Field {
     private int rows;
     private int columns;
     private Cell[][] playground;
 
-    public static Field generetField(int rows, int columns){
+    public static Field generetField(int rows, int columns) {
         Field myField = new Field();
         myField.rows = rows;
         myField.columns = columns;
@@ -20,16 +23,43 @@ public class Field {
                 myField.playground[j][i] = myCell;
             }
         }
+        return myField.generateBombs(myField);
+    }
+    /**
+     * Returns the amount of bombs on the field
+     *
+     * @return bomb count
+     */
+    public int getBombCount() {
+        return 30;
+    }
+    public Field generateBombs(Field myField) {
+
+        Random rand = new Random();
+        int counter = 0;
+        while (counter != getBombCount()) {
+            int x = rand.nextInt(columns);
+            int y = rand.nextInt(rows);
+            while (playground[x][y].isBomb()) {
+                x = rand.nextInt(columns);
+                y = rand.nextInt(rows);
+            }
+            playground[x][y].setBomb(true);
+            counter++;
+        }
         return myField;
     }
+    public boolean isClicked(int x, int y){
+        return playground[x][y].isBomb();
+    }
 
-    public void setCellType(int x, int y, int type){
+    public void setCellType(int x, int y, int type) {
         Cell a = playground[x][y];
         a.setType(type);
         playground[x][y] = a;
     }
-    
-    public int getCellType(int x, int y){
+
+    public int getCellType(int x, int y) {
         Cell a = playground[x][y];
         return a.getType();
     }

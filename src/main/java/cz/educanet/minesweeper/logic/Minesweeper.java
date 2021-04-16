@@ -2,10 +2,11 @@ package cz.educanet.minesweeper.logic;
 
 public class Minesweeper {
 
-    private final Field playground;
+    private Field playground;
     private int rowsCount;
     private int columnsCount;
     private int flag = 0;
+    private boolean isClicked2;
 
 
     public Minesweeper(int rows, int columns) {
@@ -28,19 +29,24 @@ public class Minesweeper {
     public int getField(int x, int y) {
         return playground.getCellType(x,y);
     }
-
-
     public void toggleFieldState(int x, int y) { // Pravý / Vlaječka
         playground.setCellType(x,y,2);
+        
         setFlag(+1);
     }
-
     public void reveal(int x, int y) { // Levý / Odhalení
         playground.setCellType(x,y,1);
+        if (playground.isClicked(x,y)){
+            isClicked2 = true;
+        }
     }
 
     public int getAdjacentBombCount(int x, int y) { // Čísla okolo bomb
-        return 1;
+        if(){
+            
+        }
+
+        return 0;
     }
 
     /**
@@ -55,21 +61,12 @@ public class Minesweeper {
     }
 
     /**
-     * Returns the amount of bombs on the field
-     *
-     * @return bomb count
-     */
-    public int getBombCount() {
-        return 0;
-    }
-
-    /**
      * total bombs - number of flags
      *
      * @return remaining bomb count
      */
     public int getRemainingBombCount() {
-        return 0;
+        return playground.getBombCount() - getFlag();
     }
 
     /**
@@ -87,21 +84,18 @@ public class Minesweeper {
      * @return if player lost
      */
     public boolean didLoose() {
-        return false;
+        return isClicked2;
     }
 
     public int getRows() {
         return rowsCount;
     }
-
     public int getColumns() {
         return columnsCount;
     }
-
     public int getFlag() {
         return flag;
     }
-
     public void setFlag(int flag) {
         this.flag = flag;
     }
