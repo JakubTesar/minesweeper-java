@@ -26,25 +26,28 @@ public class Field {
         return myField.generateBombs(myField);
     }
 
-    public Cell getCellPosition(int x, int y){
+    public Cell getCellPosition(int x, int y) {
         return this.playground[x][y];
     }
+
     /**
      * Returns the amount of bombs on the field
      *
      * @return bomb count
      */
     public int getBombCount() {
-        return 30;
+        return 10;
     }
 
     public Field generateBombs(Field myField) {
 
         Random rand = new Random();
         int counter = 0;
+
         while (counter != getBombCount()) {
             int x = rand.nextInt(columns);
             int y = rand.nextInt(rows);
+
             while (playground[x][y].isBomb()) {
                 x = rand.nextInt(columns);
                 y = rand.nextInt(rows);
@@ -54,7 +57,8 @@ public class Field {
         }
         return myField;
     }
-    public boolean isClicked(int x, int y){
+
+    public boolean isClicked(int x, int y) {
         return playground[x][y].isBomb();
     }
 
